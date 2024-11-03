@@ -5,7 +5,7 @@ namespace WebApi_test.models
     public class Users
     {
         [Key]
-        public int userId { get; set; }
+        public long userId { get; set; }
 
         [Required]
         public string name { get; set; } = "";
@@ -26,6 +26,11 @@ namespace WebApi_test.models
         public double puttingGoal { get; set; }
 
         public String approachGoal { get; set; } = "";
+        public String shotGoal { get; set; } = "";
+
+        public String passwordHash { get; set; } = "";
+        public DateTime createdAt { get; set; } = DateTime.Now;
+
 
     }
 }
