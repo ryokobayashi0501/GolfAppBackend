@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi_test.Models;
 using WebApi_test.models;
+using GolfAppBackend.Models.DTOs;
 
 namespace GolfAppBackend.Controllers
 {
@@ -23,14 +24,36 @@ namespace GolfAppBackend.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Users>>> Getusers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> Getusers()
         {
-            return await _context.users.ToListAsync();
+            var users = await _context.users.ToListAsync();
+
+            List<UserDto> result = new List<UserDto>();
+            foreach (var user in users)
+            {
+                result.Add(new UserDto
+                {
+                    approachGoal = user.approachGoal,
+                    averageScore = user.averageScore,
+                    createdAt = user.createdAt,
+                    email = user.email,
+                    name = user.name,
+                    passwordHash = user.passwordHash,
+                    practiceFrequency = user.practiceFrequency,
+                    puttingGoal = user.puttingGoal.ToString(),
+                    scoreGoal = user.scoreGoal,
+                    shotGoal = user.shotGoal,
+                    userId = user.userId,
+                    username = user.username,
+                    yearsOfExperience = user.yearsOfExperience
+                });
+            }
+            return result;
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Users>> GetUsers(int id)
+        public async Task<ActionResult<Users>> GetUsers(long id)
         {
             var users = await _context.users.FindAsync(id);
 

@@ -12,9 +12,10 @@ namespace WebApi_test.Models
         }
 
         public DbSet<Users> users { get; set; }
-        public DbSet<GolfAppBackend.Models.Course> Course { get; set; } = default!;
-        public DbSet<GolfAppBackend.Models.Round> Round { get; set; } = default!;
-        public DbSet<GolfAppBackend.Models.RoundDetail> RoundDetail { get; set; } = default!;
-        public DbSet<GolfAppBackend.Models.Shot> Shot { get; set; } = default!;
+        public DbSet<Users> courses { get; set; }
+        public DbSet<GolfAppBackend.Models.Courses> Courses { get; set; } = default!;
+        public DbSet<Rounds> rounds { get; set; }
+        public DbSet<GolfAppBackend.Models.Holes> Holes { get; set; } = default!;
+
     }
 }

@@ -23,36 +23,36 @@ namespace GolfAppBackend.Controllers
 
         // GET: api/Rounds
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Round>>> GetRound()
+        public async Task<ActionResult<IEnumerable<Rounds>>> Getrounds()
         {
-            return await _context.Round.ToListAsync();
+            return await _context.rounds.ToListAsync();
         }
 
         // GET: api/Rounds/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Round>> GetRound(long id)
+        public async Task<ActionResult<Rounds>> GetRounds(long id)
         {
-            var round = await _context.Round.FindAsync(id);
+            var rounds = await _context.rounds.FindAsync(id);
 
-            if (round == null)
+            if (rounds == null)
             {
                 return NotFound();
             }
 
-            return round;
+            return rounds;
         }
 
         // PUT: api/Rounds/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRound(long id, Round round)
+        public async Task<IActionResult> PutRounds(long id, Rounds rounds)
         {
-            if (id != round.roundID)
+            if (id != rounds.roundId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(round).State = EntityState.Modified;
+            _context.Entry(rounds).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace GolfAppBackend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoundExists(id))
+                if (!RoundsExists(id))
                 {
                     return NotFound();
                 }
@@ -76,33 +76,33 @@ namespace GolfAppBackend.Controllers
         // POST: api/Rounds
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Round>> PostRound(Round round)
+        public async Task<ActionResult<Rounds>> PostRounds(Rounds rounds)
         {
-            _context.Round.Add(round);
+            _context.rounds.Add(rounds);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRound", new { id = round.roundID }, round);
+            return CreatedAtAction("GetRounds", new { id = rounds.roundId }, rounds);
         }
 
         // DELETE: api/Rounds/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRound(long id)
+        public async Task<IActionResult> DeleteRounds(long id)
         {
-            var round = await _context.Round.FindAsync(id);
-            if (round == null)
+            var rounds = await _context.rounds.FindAsync(id);
+            if (rounds == null)
             {
                 return NotFound();
             }
 
-            _context.Round.Remove(round);
+            _context.rounds.Remove(rounds);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool RoundExists(long id)
+        private bool RoundsExists(long id)
         {
-            return _context.Round.Any(e => e.roundID == id);
+            return _context.rounds.Any(e => e.roundId == id);
         }
     }
 }
