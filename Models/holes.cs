@@ -13,3 +13,4 @@ namespace GolfAppBackend.Models
         public int yardage { get; set; }
     }
 }
+// add holes
