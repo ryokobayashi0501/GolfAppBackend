@@ -23,16 +23,16 @@ namespace GolfAppBackend.Controllers
 
         // GET: api/Rounds
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Rounds>>> Getrounds()
+        public async Task<ActionResult<IEnumerable<Round>>> Getrounds()
         {
-            return await _context.rounds.ToListAsync();
+            return await _context.Rounds.ToListAsync();
         }
 
         // GET: api/Rounds/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Rounds>> GetRounds(long id)
+        public async Task<ActionResult<Round>> GetRounds(long id)
         {
-            var rounds = await _context.rounds.FindAsync(id);
+            var rounds = await _context.Rounds.FindAsync(id);
 
             if (rounds == null)
             {
@@ -45,7 +45,7 @@ namespace GolfAppBackend.Controllers
         // PUT: api/Rounds/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRounds(long id, Rounds rounds)
+        public async Task<IActionResult> PutRounds(long id, Round rounds)
         {
             if (id != rounds.roundId)
             {
@@ -76,9 +76,9 @@ namespace GolfAppBackend.Controllers
         // POST: api/Rounds
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Rounds>> PostRounds(Rounds rounds)
+        public async Task<ActionResult<Round>> PostRounds(Round rounds)
         {
-            _context.rounds.Add(rounds);
+            _context.Rounds.Add(rounds);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRounds", new { id = rounds.roundId }, rounds);
@@ -88,13 +88,13 @@ namespace GolfAppBackend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRounds(long id)
         {
-            var rounds = await _context.rounds.FindAsync(id);
+            var rounds = await _context.Rounds.FindAsync(id);
             if (rounds == null)
             {
                 return NotFound();
             }
 
-            _context.rounds.Remove(rounds);
+            _context.Rounds.Remove(rounds);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace GolfAppBackend.Controllers
 
         private bool RoundsExists(long id)
         {
-            return _context.rounds.Any(e => e.roundId == id);
+            return _context.Rounds.Any(e => e.roundId == id);
         }
     }
 }

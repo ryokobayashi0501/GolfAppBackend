@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GolfAppBackend.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApi_test.models
 {
-    public class Users
+    public class User
     {
         [Key]
         public long userId { get; set; }
@@ -31,6 +32,12 @@ namespace WebApi_test.models
         public String passwordHash { get; set; } = "";
         public DateTime createdAt { get; set; } = DateTime.Now;
 
+        public ICollection<Round> Rounds { get; set; }
 
+        // コンストラクタで初期化
+        public User()
+        {
+            Rounds = new HashSet<Round>();
+        }
     }
 }

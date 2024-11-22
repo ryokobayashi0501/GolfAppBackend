@@ -26,7 +26,7 @@ namespace GolfAppBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> Getusers()
         {
-            var users = await _context.users.ToListAsync();
+            var users = await _context.Users.ToListAsync();
 
             List<UserDto> result = new List<UserDto>();
             foreach (var user in users)
@@ -53,9 +53,9 @@ namespace GolfAppBackend.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Users>> GetUsers(long id)
+        public async Task<ActionResult<User>> GetUsers(long id)
         {
-            var users = await _context.users.FindAsync(id);
+            var users = await _context.Users.FindAsync(id);
 
             if (users == null)
             {
@@ -68,7 +68,7 @@ namespace GolfAppBackend.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsers(int id, Users users)
+        public async Task<IActionResult> PutUsers(int id, User users)
         {
             if (id != users.userId)
             {
@@ -99,9 +99,9 @@ namespace GolfAppBackend.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Users>> PostUsers(Users users)
+        public async Task<ActionResult<User>> PostUsers(User users)
         {
-            _context.users.Add(users);
+            _context.Users.Add(users);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUsers", new { id = users.userId }, users);
@@ -111,13 +111,13 @@ namespace GolfAppBackend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsers(int id)
         {
-            var users = await _context.users.FindAsync(id);
+            var users = await _context.Users.FindAsync(id);
             if (users == null)
             {
                 return NotFound();
             }
 
-            _context.users.Remove(users);
+            _context.Users.Remove(users);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -125,7 +125,7 @@ namespace GolfAppBackend.Controllers
 
         private bool UsersExists(int id)
         {
-            return _context.users.Any(e => e.userId == id);
+            return _context.Users.Any(e => e.userId == id);
         }
     }
 }

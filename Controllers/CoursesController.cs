@@ -1,12 +1,12 @@
-﻿using System;
+﻿// Controllers/CoursesController.cs
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GolfAppBackend.Models;
 using WebApi_test.Models;
+using System.Runtime.InteropServices;
 
 namespace GolfAppBackend.Controllers
 {
@@ -21,95 +21,168 @@ namespace GolfAppBackend.Controllers
             _context = context;
         }
 
-        // GET: api/Courses
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Courses>>> GetCourses()
+        // GET: api/Courses/user/{userId}
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCoursesByUserId(long userId)
         {
-            return await _context.Courses.ToListAsync();
-        }
-
-        // GET: api/Courses/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Courses>> GetCourses(long id)
-        {
-            var courses = await _context.Courses.FindAsync(id);
-
-            if (courses == null)
-            {
-                return NotFound();
-            }
+            // ユーザーが参加しているラウンドのコースを、Holesと一緒に取得
+            var courses = await _context.Courses
+                .Where(c => c.Rounds.Any(r => r.userId == userId))
+                .Include(c => c.Holes)
+                .ToListAsync();
 
             return courses;
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<ActionResult<IEnumerable<Courses>>> GetCoursesByUserId(long userId)
-        {
-            var courses = await (from round in _context.rounds
-                                 join course in _context.Courses on round.courseId equals course.courseId
-                                 where round.userId == userId
-                                 select course).Distinct().ToListAsync();
 
-            if (courses == null || !courses.Any())
+        [HttpPost("user/{userId}")]
+        public async Task<ActionResult<Course>> PostCourse(long userId, [FromBody] Course course)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.userId == userId);
+            if (user == null)
             {
-                return NotFound(); // No courses found for this user
+                return NotFound("The specified user cannot be found.");
             }
 
-            return Ok(courses);
+            // コース名のチェック
+            if (string.IsNullOrEmpty(course.courseName))
+            {
+                return BadRequest("CourseName is required.");
+            }
+
+            // Holesコレクションが正しいかチェック
+            if (course.Holes == null || course.Holes.Count != 18)
+            {
+                return BadRequest("Exactly 18 holes are required.");
+            }
+
+            // 各ホールのHoleNumberが1から18になっているかチェック
+            for (int i = 1; i <= 18; i++)
+            {
+                if (!course.Holes.Any(h => h.holeNumber == i))
+                {
+                    return BadRequest($"Hole number {i} is missing.");
+                }
+            }
+
+            var round = new Round
+            {
+                userId = userId,
+                Course = course,
+                roundDate = DateTime.UtcNow
+            };
+
+            // コースをデータベースに追加
+            _context.Courses.Add(course);
+            _context.Rounds.Add(round);
+
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetCourseById), new { id = course.courseId }, course);
         }
 
 
-        // POST: api/Courses/user/{userId}
-        [HttpPost("user/{userId}")]
-        public async Task<ActionResult<Courses>> PostCourseForUser(long userId, Courses course)
+
+        [HttpPost]
+        public async Task<ActionResult<Course>> PostCourse([FromBody] Course course)
         {
+            // コース名のチェック
+            if (string.IsNullOrEmpty(course.courseName))
+            {
+                return BadRequest("CourseName is required.");
+            }
+
+            // Holesコレクションが正しいかチェック
+            if (course.Holes == null || course.Holes.Count != 18)
+            {
+                return BadRequest("Exactly 18 holes are required.");
+            }
+
+            // 各ホールのHoleNumberが1から18になっているかチェック
+            for (int i = 1; i <= 18; i++)
+            {
+                if (!course.Holes.Any(h => h.holeNumber == i))
+                {
+                    return BadRequest($"Hole number {i} is missing.");
+                }
+            }
+
             // コースをデータベースに追加
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
 
-            // コースが追加されたらそのコースに関連するラウンドを作成
-            var newRound = new Rounds
-            {
-                userId = userId, // ユーザーIDを設定
-                courseId = course.courseId, // 作成されたコースのIDを設定
-                roundDate = DateTime.Now // 現在の日付を使用（必要に応じて変更）
-            };
-
-            // ラウンドデータをデータベースに追加
-            _context.rounds.Add(newRound);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCourses", new { id = course.courseId }, course);
+            return CreatedAtAction(nameof(GetCourseById), new { id = course.courseId }, course);
         }
 
-        // PUT: api/Courses/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCourses(long id, Courses courses)
+
+        [HttpPost("bulk")] //add courses at one time
+        public async Task<ActionResult> PostMultipleCourses([FromBody] List<Course> courses)
         {
-            if (id != courses.courseId)
+            foreach (var course in courses)
+            {
+                if (string.IsNullOrEmpty(course.courseName))
+                {
+                    return BadRequest("Each course must have a name.");
+                }
+
+                if (course.Holes == null || course.Holes.Count != 18)
+                {
+                    return BadRequest("Each course must have exactly 18 holes.");
+                }
+
+                for (int i = 1; i <= 18; i++)
+                {
+                    if (!course.Holes.Any(h => h.holeNumber == i))
+                    {
+                        return BadRequest($"Hole number {i} is missing for course {course.courseName}.");
+                    }
+                }
+
+                _context.Courses.Add(course);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Courses added successfully.");
+        }
+
+
+
+
+        // GET: api/Courses/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Course>> GetCourseById(long id)
+        {
+            var course = await _context.Courses
+                .Include(c => c.Holes)
+                .FirstOrDefaultAsync(c => c.courseId == id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return course;
+        }
+
+        // PUT: api/Courses/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutCourse(long id, Course course)
+        {
+            if (id != course.courseId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(courses).State = EntityState.Modified;
+            _context.Entry(course).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
-
-                // 関連するラウンドの更新 (必要に応じて更新が必要か検討)
-                var rounds = await _context.rounds.Where(r => r.courseId == id).ToListAsync();
-                foreach (var round in rounds)
-                {
-                    round.courseId = courses.courseId; // コース情報を更新する場合は反映
-                    _context.Entry(round).State = EntityState.Modified;
-                }
-
-                await _context.SaveChangesAsync(); // ラウンドの変更も保存
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CoursesExists(id))
+                if (!CourseExists(id))
                 {
                     return NotFound();
                 }
@@ -122,44 +195,27 @@ namespace GolfAppBackend.Controllers
             return NoContent();
         }
 
-        // CoursesExistsメソッドを追加して、特定のコースが存在するか確認
-        private bool CoursesExists(long id)
-        {
-            return _context.Courses.Any(e => e.courseId == id);
-        }
-
-
-        // DELETE: api/Courses/5
+        // DELETE: api/Courses/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCourses(long id)
+        public async Task<IActionResult> DeleteCourse(long id)
         {
-            var courses = await _context.Courses.FindAsync(id);
-            if (courses == null)
+            var course = await _context.Courses
+                .Include(c => c.Holes)
+                .FirstOrDefaultAsync(c => c.courseId == id);
+            if (course == null)
             {
                 return NotFound();
             }
 
-            var course = await _context.Courses.Where(x => x.courseId == id).FirstOrDefaultAsync();
-
-            // 関連するラウンドも削除
-            //var rounds = await _context.rounds.Where(r => r.courseId == id).ToListAsync();
-            //if (rounds.Any())
-            //{
-            //    _context.rounds.RemoveRange(rounds);
-            //}
-
             _context.Courses.Remove(course);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch(Exception ex)
-            {
-                Console.Write(ex.ToString());   
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+        private bool CourseExists(long id)
+        {
+            return _context.Courses.Any(e => e.courseId == id);
+        }
     }
 }

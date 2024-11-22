@@ -21,7 +21,7 @@ namespace GolfAppBackend.Controllers
 
         // GET: api/Courses/{courseId}/Holes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Holes>>> GetHoles(long courseId)
+        public async Task<ActionResult<IEnumerable<Hole>>> GetHoles(long courseId)
         {
             // コースが存在するか確認
             var course = await _context.Courses.FindAsync(courseId);
@@ -40,7 +40,7 @@ namespace GolfAppBackend.Controllers
 
         // GET: api/Courses/{courseId}/Holes/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Holes>> GetHoleById(long courseId, long id)
+        public async Task<ActionResult<Hole>> GetHoleById(long courseId, long id)
         {
             // コースが存在するか確認
             var course = await _context.Courses.FindAsync(courseId);
@@ -61,9 +61,9 @@ namespace GolfAppBackend.Controllers
             return hole;
         }
 
-        // POST: api/Courses/{courseId}/Holes
+        // HolesController.cs の POST メソッド
         [HttpPost]
-        public async Task<ActionResult<Holes>> PostHole(long courseId, Holes hole)
+        public async Task<ActionResult<Hole>> PostHole(long courseId, Hole hole)
         {
             // コースが存在するか確認
             var course = await _context.Courses.FindAsync(courseId);
@@ -81,9 +81,10 @@ namespace GolfAppBackend.Controllers
             return CreatedAtAction(nameof(GetHoleById), new { courseId = courseId, id = hole.holeId }, hole);
         }
 
+
         // PUT: api/Courses/{courseId}/Holes/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHole(long courseId, long id, Holes hole)
+        public async Task<IActionResult> PutHole(long courseId, long id, Hole hole)
         {
             if (id != hole.holeId)
             {
