@@ -11,6 +11,7 @@ namespace GolfAppBackend.Models
 
         [Required]
         public string courseName { get; set; }
+        public string imageUri { get; set; }
 
         // Holesのコレクション
         public List<Hole> Holes { get; set; } = new List<Hole>();

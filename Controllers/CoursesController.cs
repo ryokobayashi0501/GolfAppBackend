@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using GolfAppBackend.Models;
 using WebApi_test.Models;
 using System.Runtime.InteropServices;
+using GolfAppBackend.Models.DTOs;
 
 namespace GolfAppBackend.Controllers
 {
@@ -20,6 +21,63 @@ namespace GolfAppBackend.Controllers
         {
             _context = context;
         }
+
+
+
+        // GET: api/Courses
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
+        {
+            var courses = await _context.Courses.Include(c => c.Holes).ToListAsync();
+            return courses;
+        }
+
+
+        // GET: api/Courses/name/{courseName}
+        [HttpGet("name/{courseName}")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCourseByName(string courseName)
+        {
+            var courses = await _context.Courses
+                .Where(c => EF.Functions.Like(c.courseName, $"%{courseName}%"))
+                .Include(c => c.Holes)
+                .ToListAsync();
+
+            if (courses == null || courses.Count == 0)
+            {
+                return NotFound("No courses found with the specified name.");
+            }
+
+            return courses;
+        }
+
+
+
+
+        // POST: api/Rounds/user/{userId}/course/{courseId}
+        [HttpPost("Rounds/user/{userId}/course/{courseId}")]
+        public async Task<ActionResult<Round>> AddRoundForUser(long userId, long courseId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            var course = await _context.Courses.FindAsync(courseId);
+
+            if (user == null || course == null)
+            {
+                return NotFound("User or Course not found.");
+            }
+
+            var round = new Round
+            {
+                userId = userId,
+                courseId = courseId,
+                roundDate = DateTime.UtcNow
+            };
+
+            _context.Rounds.Add(round);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetCourseById), new { id = round.courseId }, round);
+        }
+
 
         // GET: api/Courses/user/{userId}
         [HttpGet("user/{userId}")]
@@ -80,6 +138,41 @@ namespace GolfAppBackend.Controllers
 
             return CreatedAtAction(nameof(GetCourseById), new { id = course.courseId }, course);
         }
+
+
+
+        // POST: api/Courses/user/{userId}/select
+        [HttpPost("user/{userId}/select")]
+        public async Task<ActionResult<RoundDTO>> SelectCourseForUser(long userId, [FromBody] long courseId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            var course = await _context.Courses.FindAsync(courseId);
+
+            if (user == null || course == null)
+            {
+                return NotFound("User or Course not found.");
+            }
+
+            var round = new Round
+            {
+                userId = userId,
+                courseId = courseId,
+                roundDate = DateTime.UtcNow // ラウンドが選択された日付
+            };
+
+            _context.Rounds.Add(round);
+            await _context.SaveChangesAsync();
+
+            var roundDto = new RoundDTO
+            {
+                roundId = round.roundId,
+                courseId = round.courseId,
+                roundDate = round.roundDate
+            };
+
+            return CreatedAtAction(nameof(GetCourseById), new { id = round.courseId }, roundDto);
+        }
+
 
 
 
@@ -218,4 +311,6 @@ namespace GolfAppBackend.Controllers
             return _context.Courses.Any(e => e.courseId == id);
         }
     }
+
+
 }

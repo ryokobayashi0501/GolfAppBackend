@@ -68,14 +68,14 @@ namespace GolfAppBackend.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsers(int id, User users)
+        public async Task<IActionResult> PutUsers(int id, User user)
         {
-            if (id != users.userId)
+            if (id != user.userId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(users).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -93,7 +93,24 @@ namespace GolfAppBackend.Controllers
                 }
             }
 
-            return NoContent();
+            UserDto userdto = new()
+            {
+                approachGoal = user.approachGoal,
+                averageScore = user.averageScore,
+                createdAt = user.createdAt,
+                email = user.email,
+                name = user.name,
+                passwordHash = user.passwordHash,
+                practiceFrequency = user.practiceFrequency,
+                puttingGoal = user.puttingGoal.ToString(),
+                scoreGoal = user.scoreGoal,
+                shotGoal = user.shotGoal,
+                userId = user.userId,
+                username = user.username,
+                yearsOfExperience = user.yearsOfExperience
+            };
+
+            return Ok(user);
         }
 
         // POST: api/Users

@@ -3,6 +3,13 @@ using WebApi_test.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+////この設定により、循環参照が発生した場合に$idや$refで参照を追跡するようになり、JSONシリアライゼーションが可能になります。
+//builder.Services.AddControllers().AddJsonOptions(options =>
+//{
+//    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+//    options.JsonSerializerOptions.WriteIndented = true;
+//});
+
 // サービスの追加
 builder.Services.AddControllers();
 
@@ -22,11 +29,13 @@ builder.Services.AddCors(options =>
         });
 });
 
+
 // データベースコンテキストの設定（SQL Server）
 builder.Services.AddDbContext<ApiDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
 
 // 開発環境でのSwagger設定
 if (app.Environment.IsDevelopment())

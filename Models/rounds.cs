@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using WebApi_test.models;
+using System.Text.Json.Serialization;
 
 namespace GolfAppBackend.Models
 {
@@ -13,10 +14,12 @@ namespace GolfAppBackend.Models
 
         public long courseId { get; set; }
 
-        [Required]
+        
         public DateTime roundDate { get; set; } = DateTime.Now;
 
-        public User User { get; set; }
-        public Course Course { get; set; }
+        [JsonIgnore]
+        public User? User { get; set; }
+        [JsonIgnore]
+        public Course? Course { get; set; }
     }
 }

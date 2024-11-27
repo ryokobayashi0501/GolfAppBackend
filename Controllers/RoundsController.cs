@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GolfAppBackend.Models;
 using WebApi_test.Models;
+using GolfAppBackend.Models.DTOs;
 
 namespace GolfAppBackend.Controllers
 {
@@ -41,6 +42,31 @@ namespace GolfAppBackend.Controllers
 
             return rounds;
         }
+
+        // GET: api/Rounds/user/{userId}
+        [HttpGet("user/{userId}/rounds")]
+        public async Task<ActionResult<IEnumerable<RoundDTO>>> GetRoundsByUserId(long userId)
+        {
+            var rounds = await _context.Rounds
+                .Where(r => r.userId == userId)
+                .Include(r => r.Course) // コース情報を含める
+                .Select(r => new RoundDTO
+                {
+                    roundId = r.roundId,
+                    courseId = r.courseId,
+                    userId = r.userId,
+                    courseName = r.Course.courseName,
+                    imageUri = r.Course.imageUri,
+                    roundDate = r.roundDate
+                })
+                .OrderByDescending(r => r.roundDate) // 最新順にソート
+                .ToListAsync();
+
+            return Ok(rounds);
+        }
+
+
+
 
         // PUT: api/Rounds/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -78,11 +104,17 @@ namespace GolfAppBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<Round>> PostRounds(Round rounds)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             _context.Rounds.Add(rounds);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRounds", new { id = rounds.roundId }, rounds);
         }
+
 
         // DELETE: api/Rounds/5
         [HttpDelete("{id}")]
