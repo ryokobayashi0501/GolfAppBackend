@@ -10,7 +10,6 @@ using GolfAppBackend.Models.Enums;
 
 namespace GolfAppBackend.Controllers
 {
-    //[Route("api/users/{userId}/rounds/{roundId}/holes/{holeId}/roundHoles/{roundHoleId}/shots")]\
     [Route("api/[controller]")]
     [ApiController]
     public class ShotsController : ControllerBase
@@ -69,6 +68,19 @@ namespace GolfAppBackend.Controllers
 
             foreach (var shotDto in shotDtos)
             {
+                var shotType = ParseShotType(shotDto.shotTypeName, shotDto.shotType);
+                if (shotType == null)
+                {
+                    return BadRequest($"Invalid shotType value or name: {shotDto.shotType} of type {shotDto.shotTypeName}");
+                }
+
+                var shotResult = ParseShotResult(shotDto.shotResultName, shotDto.shotResult);
+                if (shotResult == null && !string.IsNullOrEmpty(shotDto.shotResultName))
+                {
+                    return BadRequest($"Invalid shotResult value or name: {shotDto.shotResult} of type {shotDto.shotResultName}");
+                }
+
+                // Create Shot entity
                 var shot = new Shot
                 {
                     roundHoleId = roundHoleId,
@@ -77,10 +89,10 @@ namespace GolfAppBackend.Controllers
                     remainingDistance = shotDto.remainingDistance,
                     clubUsed = shotDto.clubUsed,
                     ballDirection = shotDto.ballDirection,
-                    shotType = shotDto.shotTypeName == "PuttType" ? (ShotType)(PuttType)shotDto.shotType : (ShotType)shotDto.shotType,
+                    shotType = shotType.Value,
                     ballHeight = shotDto.ballHeight,
                     lie = shotDto.lie,
-                    shotResult = shotDto.shotResultName == "PuttResult" ? (ShotResult?)(PuttResult)shotDto.shotResult : (ShotResult?)shotDto.shotResult,
+                    shotResult = shotResult,
                     notes = shotDto.notes
                 };
 
@@ -92,6 +104,58 @@ namespace GolfAppBackend.Controllers
             return Ok("Shots have been successfully added.");
         }
 
+        // Utility methods to parse enums dynamically
+        private ShotType? ParseShotType(string shotTypeName, object shotTypeValue)
+        {
+            if (string.IsNullOrEmpty(shotTypeName) || shotTypeValue == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                if (shotTypeName == nameof(ShotType))
+                {
+                    return (ShotType)Enum.Parse(typeof(ShotType), shotTypeValue.ToString());
+                }
+                if (shotTypeName == nameof(PuttType))
+                {
+                    return (ShotType)(PuttType)Enum.Parse(typeof(PuttType), shotTypeValue.ToString());
+                }
+            }
+            catch
+            {
+                // If parsing fails, return null
+            }
+
+            return null;
+        }
+
+        private ShotResult? ParseShotResult(string shotResultName, object shotResultValue)
+        {
+            if (string.IsNullOrEmpty(shotResultName) || shotResultValue == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                if (shotResultName == nameof(ShotResult))
+                {
+                    return (ShotResult)Enum.Parse(typeof(ShotResult), shotResultValue.ToString());
+                }
+                if (shotResultName == nameof(PuttResult))
+                {
+                    return (ShotResult?)(PuttResult)Enum.Parse(typeof(PuttResult), shotResultValue.ToString());
+                }
+            }
+            catch
+            {
+                // If parsing fails, return null
+            }
+
+            return null;
+        }
 
         // PUT: api/users/{userId}/rounds/{roundId}/holes/{holeId}/roundHoles/{roundHoleId}/shots/{shotId}
         [HttpPut("{shotId}")]
@@ -111,31 +175,27 @@ namespace GolfAppBackend.Controllers
                 return NotFound();
             }
 
+            var shotType = ParseShotType(shotDto.shotTypeName, shotDto.shotType);
+            if (shotType == null)
+            {
+                return BadRequest($"Invalid shotType value or name: {shotDto.shotType} of type {shotDto.shotTypeName}");
+            }
+
+            var shotResult = ParseShotResult(shotDto.shotResultName, shotDto.shotResult);
+            if (shotResult == null && !string.IsNullOrEmpty(shotDto.shotResultName))
+            {
+                return BadRequest($"Invalid shotResult value or name: {shotDto.shotResult} of type {shotDto.shotResultName}");
+            }
+
             existingShot.shotNumber = shotDto.shotNumber;
             existingShot.distance = shotDto.distance;
             existingShot.remainingDistance = shotDto.remainingDistance;
             existingShot.clubUsed = shotDto.clubUsed;
             existingShot.ballDirection = shotDto.ballDirection;
-
-            // NullableなshotTypeの処理
-            if (shotDto.shotType != null)
-            {
-                existingShot.shotType = (ShotType)shotDto.shotType;
-            }
-            else
-            {
-                return BadRequest("shotType cannot be null."); // エラーを返すか、適切なデフォルトを設定
-            }
-
+            existingShot.shotType = shotType.Value;
             existingShot.ballHeight = shotDto.ballHeight;
             existingShot.lie = shotDto.lie;
-
-            // NullableなshotResultの処理
-            if (shotDto.shotResult != null)
-            {
-                existingShot.shotResult = (ShotResult?)shotDto.shotResult; // キャストを行う
-            }
-
+            existingShot.shotResult = shotResult;
             existingShot.notes = shotDto.notes;
 
             _context.Entry(existingShot).State = EntityState.Modified;
@@ -158,8 +218,6 @@ namespace GolfAppBackend.Controllers
 
             return NoContent();
         }
-
-
 
         // DELETE: api/users/{userId}/rounds/{roundId}/holes/{holeId}/roundHoles/{roundHoleId}/shots/{shotId}
         [HttpDelete("{shotId}")]

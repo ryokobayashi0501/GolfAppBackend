@@ -2,6 +2,20 @@
 
 namespace GolfAppBackend.Models.Enums
 {
+    public class GetShotResult
+    {
+        public static List<string> GetShotResultList()
+        {
+            // Retrieve all possible values from the enum and convert to a list of strings
+            List<string> shotResult = new List<string>();
+            foreach (var value in Enum.GetValues(typeof(ShotResult)))
+            {
+                shotResult.Add(value.ToString());
+            }
+            return shotResult;
+        }
+    }
+
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ShotResult
     {
@@ -20,6 +34,6 @@ namespace GolfAppBackend.Models.Enums
         Punch,
         Recovery,
         LayUp,
-        Holed, // パットがホールアウトした場合
+        ShotHoled, // パットがホールアウトした場合
     }
 }

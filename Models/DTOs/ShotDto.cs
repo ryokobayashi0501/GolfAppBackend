@@ -7,45 +7,94 @@ namespace GolfAppBackend.Models.DTOs
     public class ShotDto
     {
         [JsonIgnore]
-        public long shotId { get; set; }
+        public long shotId { get; set; } // Ignored during serialization
 
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Shot number must be a positive integer.")]
-        public int shotNumber { get; set; }
+        public int shotNumber { get; set; } // Represents the number of the shot in sequence
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Distance must be a non-negative integer.")]
-        public int distance { get; set; }
+        public int distance { get; set; } // Total distance covered in the shot
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Remaining distance must be a non-negative integer.")]
-        public int remainingDistance { get; set; }
+        public int remainingDistance { get; set; } // Remaining distance after the shot
 
         [Required]
-        public ClubUsed clubUsed { get; set; }
+        public ClubUsed clubUsed { get; set; } // Enum representing the club used for the shot
 
         [Required]
-        public BallDirection ballDirection { get; set; }
+        public BallDirection ballDirection { get; set; } // Enum representing the direction of the ball
+
+        [JsonIgnore]
+        public object shotType { get; set; } // Dynamically either ShotType or PuttType (ignored during serialization)
 
         [Required]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Enum shotType { get; set; }
+        public string shotTypeName { get; set; } // Indicates the specific type of the shot (e.g., "ShotType" or "PuttType")
 
         [Required]
-        public string shotTypeName { get; set; } // Enumの種類を示す（ShotType or PuttType）
+        public BallHeight ballHeight { get; set; } // Enum representing the height of the ball trajectory
 
         [Required]
-        public BallHeight ballHeight { get; set; }
+        public Lie lie { get; set; } // Enum representing the lie (where the ball lies)
+
+        [JsonIgnore]
+        public object shotResult { get; set; } // Dynamically either ShotResult or PuttResult (ignored during serialization)
 
         [Required]
-        public Lie lie { get; set; } = Lie.Tee;
+        public string shotResultName { get; set; } // Indicates the specific result of the shot (e.g., "ShotResult" or "PuttResult")
 
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Enum shotResult { get; set; }
+        public string notes { get; set; } // Additional notes on the shot
 
-        public string shotResultName { get; set; } // Enumの種類を示す（ShotResult or PuttResult）
+        // Custom methods for JSON handling of dynamic enums (for shotType and shotResult)
 
-        public string notes { get; set; }
+        [JsonPropertyName("shotType")]
+        public string ShotTypeAsString
+        {
+            get
+            {
+                return shotType != null ? shotType.ToString() : string.Empty;
+            }
+            set
+            {
+                // Logic to convert string back to proper Enum type based on shotTypeName
+                if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(shotTypeName))
+                {
+                    if (shotTypeName == "ShotType")
+                    {
+                        shotType = Enum.TryParse(typeof(ShotType), value, true, out var parsed) ? parsed : null;
+                    }
+                    else if (shotTypeName == "PuttType")
+                    {
+                        shotType = Enum.TryParse(typeof(PuttType), value, true, out var parsed) ? parsed : null;
+                    }
+                }
+            }
+        }
+
+        [JsonPropertyName("shotResult")]
+        public string ShotResultAsString
+        {
+            get
+            {
+                return shotResult != null ? shotResult.ToString() : string.Empty;
+            }
+            set
+            {
+                // Logic to convert string back to proper Enum type based on shotResultName
+                if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(shotResultName))
+                {
+                    if (shotResultName == "ShotResult")
+                    {
+                        shotResult = Enum.TryParse(typeof(ShotResult), value, true, out var parsed) ? parsed : null;
+                    }
+                    else if (shotResultName == "PuttResult")
+                    {
+                        shotResult = Enum.TryParse(typeof(PuttResult), value, true, out var parsed) ? parsed : null;
+                    }
+                }
+            }
+        }
     }
-
 }

@@ -2,6 +2,20 @@
 
 namespace GolfAppBackend.Models.Enums
 {
+    public class GetClubUsed
+    {
+        public static List<string> GetClubUsedList()
+        {
+            // Retrieve all possible values from the enum and convert to a list of strings
+            List<string> clubUsed = new List<string>();
+            foreach (var value in Enum.GetValues(typeof(ClubUsed)))
+            {
+                clubUsed.Add(value.ToString());
+            }
+            return clubUsed;
+        }
+    }
+
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ClubUsed
     {
