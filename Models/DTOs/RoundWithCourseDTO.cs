@@ -2,10 +2,10 @@
 {
     public class RoundWithCourseDTO
     {
-        public long RoundId { get; set; }
-        public long CourseId { get; set; }
-        public DateTime RoundDate { get; set; }
-        public string CourseName { get; set; } = string.Empty;
-        public string? ImageUri { get; set; }
+        public long roundId { get; set; }
+        public long courseId { get; set; }
+        public DateTime roundDate { get; set; }
+        public string courseName { get; set; } = string.Empty;
+        public string? imageUri { get; set; }
     }
 }

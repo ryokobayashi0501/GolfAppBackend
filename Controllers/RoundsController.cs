@@ -106,6 +106,10 @@ namespace GolfAppBackend.Controllers
         {
             if (!ModelState.IsValid)
             {
+                foreach (var error in ModelState)
+                {
+                    Console.WriteLine($"Error in {error.Key}: {string.Join(", ", error.Value.Errors.Select(e => e.ErrorMessage))}");
+                }
                 return BadRequest(ModelState);
             }
 
@@ -114,6 +118,7 @@ namespace GolfAppBackend.Controllers
 
             return CreatedAtAction("GetRounds", new { id = rounds.roundId }, rounds);
         }
+
 
 
         // DELETE: api/Rounds/5

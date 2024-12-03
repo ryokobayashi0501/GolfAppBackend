@@ -1,30 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using GolfAppBackend.Models.Enums;
 
-namespace GolfAppBackend.Models
+namespace GolfAppBackend.Models.DTOs
 {
-    [Table("shots")]
-    public class Shot
+    public class ShotDto
     {
-        [Key]
+        [JsonIgnore]
         public long shotId { get; set; }
 
-        // 外部キー: RoundHole
-        [Required]
-        public long roundHoleId { get; set; }
-
-        [ForeignKey("roundHoleId")]
-        [JsonIgnore] // 循環参照を防ぐために追加
-        public RoundHole RoundHole { get; set; }
-
-        // 何打目か
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Shot number must be a positive integer.")]
         public int shotNumber { get; set; }
 
-        // ショットの飛距離（ヤード）
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Distance must be a non-negative integer.")]
         public int distance { get; set; }
@@ -33,30 +21,31 @@ namespace GolfAppBackend.Models
         [Range(0, int.MaxValue, ErrorMessage = "Remaining distance must be a non-negative integer.")]
         public int remainingDistance { get; set; }
 
-        // 使用したクラブ
         [Required]
         public ClubUsed clubUsed { get; set; }
 
-        // ボールがどこに行ったか
         [Required]
         public BallDirection ballDirection { get; set; }
 
-        // ショットの種類
         [Required]
-        public ShotType shotType { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public Enum shotType { get; set; }
 
-        // ボールの弾道の高さ
+        [Required]
+        public string shotTypeName { get; set; } // Enumの種類を示す（ShotType or PuttType）
+
         [Required]
         public BallHeight ballHeight { get; set; }
 
-        // ライの状態
         [Required]
-        public Lie lie { get; set; }
+        public Lie lie { get; set; } = Lie.Tee;
 
-        // ショットの結果
-        public ShotResult? shotResult { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public Enum shotResult { get; set; }
 
-        // ショットに関するメモ（自由記述）
+        public string shotResultName { get; set; } // Enumの種類を示す（ShotResult or PuttResult）
+
         public string notes { get; set; }
     }
+
 }

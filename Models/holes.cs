@@ -23,5 +23,7 @@ namespace GolfAppBackend.Models
         [JsonIgnore]
         [ValidateNever]
         public Course? Course { get; set; }
+
+        public List<RoundHole> RoundHoles { get; set; } = new List<RoundHole>();
     }
 }
