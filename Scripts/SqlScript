@@ -1,110 +1,193 @@
 USE [master]
 GO
-/****** Object:  Database [Test_databese]    Script Date: 10/18/2024 1:42:17 PM ******/
-CREATE DATABASE [Test_databese]
+/****** Object:  Database [test_db]    Script Date: 12/8/2024 6:40:15 PM ******/
+CREATE DATABASE [test_db]
  CONTAINMENT = NONE
--- ON  PRIMARY 
---( NAME = N'Test_databese', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\Test_databese.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
--- LOG ON 
---( NAME = N'Test_databese_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\Test_databese_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ ON  PRIMARY 
+( NAME = N'test_db', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\test_db.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'test_db_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\test_db_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
  WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
 GO
-ALTER DATABASE [Test_databese] SET COMPATIBILITY_LEVEL = 160
+ALTER DATABASE [test_db] SET COMPATIBILITY_LEVEL = 160
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
 begin
-EXEC [Test_databese].[dbo].[sp_fulltext_database] @action = 'enable'
+EXEC [test_db].[dbo].[sp_fulltext_database] @action = 'enable'
 end
 GO
-ALTER DATABASE [Test_databese] SET ANSI_NULL_DEFAULT OFF 
+ALTER DATABASE [test_db] SET ANSI_NULL_DEFAULT OFF 
 GO
-ALTER DATABASE [Test_databese] SET ANSI_NULLS OFF 
+ALTER DATABASE [test_db] SET ANSI_NULLS OFF 
 GO
-ALTER DATABASE [Test_databese] SET ANSI_PADDING OFF 
+ALTER DATABASE [test_db] SET ANSI_PADDING OFF 
 GO
-ALTER DATABASE [Test_databese] SET ANSI_WARNINGS OFF 
+ALTER DATABASE [test_db] SET ANSI_WARNINGS OFF 
 GO
-ALTER DATABASE [Test_databese] SET ARITHABORT OFF 
+ALTER DATABASE [test_db] SET ARITHABORT OFF 
 GO
-ALTER DATABASE [Test_databese] SET AUTO_CLOSE OFF 
+ALTER DATABASE [test_db] SET AUTO_CLOSE OFF 
 GO
-ALTER DATABASE [Test_databese] SET AUTO_SHRINK OFF 
+ALTER DATABASE [test_db] SET AUTO_SHRINK OFF 
 GO
-ALTER DATABASE [Test_databese] SET AUTO_UPDATE_STATISTICS ON 
+ALTER DATABASE [test_db] SET AUTO_UPDATE_STATISTICS ON 
 GO
-ALTER DATABASE [Test_databese] SET CURSOR_CLOSE_ON_COMMIT OFF 
+ALTER DATABASE [test_db] SET CURSOR_CLOSE_ON_COMMIT OFF 
 GO
-ALTER DATABASE [Test_databese] SET CURSOR_DEFAULT  GLOBAL 
+ALTER DATABASE [test_db] SET CURSOR_DEFAULT  GLOBAL 
 GO
-ALTER DATABASE [Test_databese] SET CONCAT_NULL_YIELDS_NULL OFF 
+ALTER DATABASE [test_db] SET CONCAT_NULL_YIELDS_NULL OFF 
 GO
-ALTER DATABASE [Test_databese] SET NUMERIC_ROUNDABORT OFF 
+ALTER DATABASE [test_db] SET NUMERIC_ROUNDABORT OFF 
 GO
-ALTER DATABASE [Test_databese] SET QUOTED_IDENTIFIER OFF 
+ALTER DATABASE [test_db] SET QUOTED_IDENTIFIER OFF 
 GO
-ALTER DATABASE [Test_databese] SET RECURSIVE_TRIGGERS OFF 
+ALTER DATABASE [test_db] SET RECURSIVE_TRIGGERS OFF 
 GO
-ALTER DATABASE [Test_databese] SET  DISABLE_BROKER 
+ALTER DATABASE [test_db] SET  DISABLE_BROKER 
 GO
-ALTER DATABASE [Test_databese] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+ALTER DATABASE [test_db] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
 GO
-ALTER DATABASE [Test_databese] SET DATE_CORRELATION_OPTIMIZATION OFF 
+ALTER DATABASE [test_db] SET DATE_CORRELATION_OPTIMIZATION OFF 
 GO
-ALTER DATABASE [Test_databese] SET TRUSTWORTHY OFF 
+ALTER DATABASE [test_db] SET TRUSTWORTHY OFF 
 GO
-ALTER DATABASE [Test_databese] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+ALTER DATABASE [test_db] SET ALLOW_SNAPSHOT_ISOLATION OFF 
 GO
-ALTER DATABASE [Test_databese] SET PARAMETERIZATION SIMPLE 
+ALTER DATABASE [test_db] SET PARAMETERIZATION SIMPLE 
 GO
-ALTER DATABASE [Test_databese] SET READ_COMMITTED_SNAPSHOT OFF 
+ALTER DATABASE [test_db] SET READ_COMMITTED_SNAPSHOT OFF 
 GO
-ALTER DATABASE [Test_databese] SET HONOR_BROKER_PRIORITY OFF 
+ALTER DATABASE [test_db] SET HONOR_BROKER_PRIORITY OFF 
 GO
-ALTER DATABASE [Test_databese] SET RECOVERY FULL 
+ALTER DATABASE [test_db] SET RECOVERY FULL 
 GO
-ALTER DATABASE [Test_databese] SET  MULTI_USER 
+ALTER DATABASE [test_db] SET  MULTI_USER 
 GO
-ALTER DATABASE [Test_databese] SET PAGE_VERIFY CHECKSUM  
+ALTER DATABASE [test_db] SET PAGE_VERIFY CHECKSUM  
 GO
-ALTER DATABASE [Test_databese] SET DB_CHAINING OFF 
+ALTER DATABASE [test_db] SET DB_CHAINING OFF 
 GO
-ALTER DATABASE [Test_databese] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+ALTER DATABASE [test_db] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
 GO
-ALTER DATABASE [Test_databese] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+ALTER DATABASE [test_db] SET TARGET_RECOVERY_TIME = 60 SECONDS 
 GO
-ALTER DATABASE [Test_databese] SET DELAYED_DURABILITY = DISABLED 
+ALTER DATABASE [test_db] SET DELAYED_DURABILITY = DISABLED 
 GO
-ALTER DATABASE [Test_databese] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+ALTER DATABASE [test_db] SET ACCELERATED_DATABASE_RECOVERY = OFF  
 GO
-EXEC sys.sp_db_vardecimal_storage_format N'Test_databese', N'ON'
+EXEC sys.sp_db_vardecimal_storage_format N'test_db', N'ON'
 GO
-ALTER DATABASE [Test_databese] SET QUERY_STORE = ON
+ALTER DATABASE [test_db] SET QUERY_STORE = ON
 GO
-ALTER DATABASE [Test_databese] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+ALTER DATABASE [test_db] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
 GO
-USE [Test_databese]
+USE [test_db]
 GO
-/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 10/18/2024 1:42:17 PM ******/
+/****** Object:  Table [dbo].[courses]    Script Date: 12/8/2024 6:40:15 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[__EFMigrationsHistory](
-	[MigrationId] [nvarchar](150) NOT NULL,
-	[ProductVersion] [nvarchar](32) NOT NULL,
- CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[courses](
+	[courseId] [bigint] IDENTITY(1,1) NOT NULL,
+	[courseName] [nvarchar](100) NULL,
+	[imageUri] [nvarchar](max) NULL,
+ CONSTRAINT [PK_courses] PRIMARY KEY CLUSTERED 
 (
-	[MigrationId] ASC
+	[courseId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[holes]    Script Date: 12/8/2024 6:40:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[holes](
+	[holeId] [bigint] IDENTITY(1,1) NOT NULL,
+	[courseId] [bigint] NULL,
+	[holeNumber] [int] NULL,
+	[par] [int] NULL,
+	[yardage] [int] NOT NULL,
+ CONSTRAINT [PK_holes] PRIMARY KEY CLUSTERED 
+(
+	[holeId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[users]    Script Date: 10/18/2024 1:42:17 PM ******/
+/****** Object:  Table [dbo].[roundHoles]    Script Date: 12/8/2024 6:40:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[roundHoles](
+	[roundHoleId] [bigint] IDENTITY(1,1) NOT NULL,
+	[roundId] [bigint] NOT NULL,
+	[holeId] [bigint] NOT NULL,
+	[stroke] [int] NOT NULL,
+	[putts] [int] NULL,
+	[penaltyStrokes] [int] NULL,
+	[weatherConditions] [nvarchar](100) NULL,
+	[bunkerShotsCount] [int] NULL,
+	[bunkerRecovery] [bit] NULL,
+	[scrambleAttempted] [bit] NULL,
+	[scrambleSuccess] [bit] NULL,
+	[fairwayHit] [bit] NULL,
+	[greenInRegulation] [bit] NULL,
+ CONSTRAINT [PK__roundHol__31870B13B12AF603] PRIMARY KEY CLUSTERED 
+(
+	[roundHoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[rounds]    Script Date: 12/8/2024 6:40:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[rounds](
+	[roundId] [bigint] IDENTITY(1,1) NOT NULL,
+	[userId] [bigint] NULL,
+	[courseId] [bigint] NULL,
+	[roundDate] [datetime] NULL,
+ CONSTRAINT [PK_rounds] PRIMARY KEY CLUSTERED 
+(
+	[roundId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[shots]    Script Date: 12/8/2024 6:40:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[shots](
+	[shotId] [bigint] IDENTITY(1,1) NOT NULL,
+	[roundHoleId] [bigint] NOT NULL,
+	[shotNumber] [int] NOT NULL,
+	[distance] [int] NOT NULL,
+	[remainingDistance] [int] NULL,
+	[clubUsed] [nvarchar](50) NOT NULL,
+	[ballDirection] [nvarchar](50) NOT NULL,
+	[shotType] [nvarchar](50) NOT NULL,
+	[ballHeight] [nvarchar](50) NOT NULL,
+	[lie] [nvarchar](50) NOT NULL,
+	[shotResult] [nvarchar](50) NULL,
+	[notes] [nvarchar](255) NULL,
+ CONSTRAINT [PK__Shot__D00727D7199C4EC3] PRIMARY KEY CLUSTERED 
+(
+	[shotId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[users]    Script Date: 12/8/2024 6:40:15 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[users](
-	[userId] [int] IDENTITY(1,1) NOT NULL,
+	[userId] [bigint] IDENTITY(1,1) NOT NULL,
 	[name] [nvarchar](max) NULL,
 	[username] [nvarchar](100) NULL,
 	[email] [nvarchar](100) NULL,
@@ -114,23 +197,670 @@ CREATE TABLE [dbo].[users](
 	[scoreGoal] [int] NULL,
 	[puttingGoal] [float] NULL,
 	[approachGoal] [nvarchar](100) NULL,
- CONSTRAINT [PK_users] PRIMARY KEY CLUSTERED 
+	[shotGoal] [nvarchar](100) NULL,
+	[passwordHash] [nvarchar](255) NULL,
+	[createdAt] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
 (
 	[userId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240923222725_initial migration', N'8.0.8')
+SET IDENTITY_INSERT [dbo].[courses] ON 
+
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (25, N'Pumpkin Ridge Golf Club - Ghost Creek', N'https://drive.google.com/uc?id=1MYWBTTsXT9U5YF5Gvl8cMjDECnyRu0j7')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (26, N'Bandon Dunes Golf Resort - Pacific Dunes', N'https://drive.google.com/uc?id=1E9l9xOEX3DkYp3pPAqQC6PqmR3oNvbZI')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (27, N'Tetherow Golf Club', N'https://drive.google.com/uc?id=1bg08tJBb01v8S7PNzTli7_F4yS0hi6NE')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (29, N'Sunriver Resort - Crosswater Club', N'https://drive.google.com/uc?id=18w2XLxbQN749IBOVSucjtV4BxgEgBlgC')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (30, N'Pronghorn Resort - Fazio Course', N'https://drive.google.com/uc?id=1Gzv53Qfln7qVD5eZugjWLRAr0_FBlkIm')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (31, N'Emerald Valley Golf Club', N'https://drive.google.com/uc?id=1wGw4cG9OHojGOrcwjPZCc3uj5SIS67d8')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (32, N'Pebble Beach Golf Links', N'https://drive.google.com/uc?id=1WK-KDIMv5WnJrRFzeHmXVwDGaAdaW7rb')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (33, N'Augusta National Golf Club', N'https://drive.google.com/uc?id=1xLNw8FHYmlqJ_92Xl9x5GWdFKp2DEPZ7')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (34, N'Pinehurst Resort No. 2 Course', N'https://drive.google.com/file/d/1fnov0AoT39YaxFxKr4_dACfyjwVIEJte/view?usp=drive_link')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (35, N'Whistling Straits (Straits Course)', N'https://drive.google.com/uc?id=1FWMMbBVCtenK7hEl6Qc90QXR-MgpTFqg')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (36, N'Bethpage State Park (Black Course)', N'https://drive.google.com/uc?id=1V_v_Y5K4UOlWlaUTvqSGwRVh7HorDh_L')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (37, N'Torrey Pines Golf Course (South Course)', N'https://drive.google.com/uc?id=18t2wmOurOn2gN54HD-McVVrk4YfhRI0r')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (38, N'Oakmont Country Club', N'https://drive.google.com/uc?id=1ECFV2X-Zj5IKqBmUL8ojXt6s12sP_U33')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (39, N'Shinnecock Hills Golf Club', N'https://drive.google.com/uc?id=1v99_fp5jagWVZ_FvQV24UXU_E7LiNbQn')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (40, N'The Country Club', N'https://drive.google.com/uc?id=1LqiWaDixupvR3JPCpmdcOy_8B2qlAf0u')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (41, N'Winged Foot Golf Club (West Course)', N'https://drive.google.com/uc?id=1KHQNyr3KHAlqM4ZvWCzjK6lIdN31V7sb')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (42, N'Merion Golf Club (East Course)', N'https://drive.google.com/uc?id=1UhbrxI1IChFSI_njOPlLiAnXX49DUTBK')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (43, N'Pebble Beach Golf Links', N'https://drive.google.com/uc?id=1WK-KDIMv5WnJrRFzeHmXVwDGaAdaW7rb')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (44, N'Michaelbrook Country Club', N'https://drive.google.com/uc?id=1UhbrxI1IChFSI_njOPlLiAnXX49DUTBK')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (45, N'Baltusrol Golf Club (Lower Course) - New Jersey', N'https://drive.google.com/uc?id=1v99_fp5jagWVZ_FvQV24UXU_E7LiNbQn')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (46, N'Medinah Country Club (Course No. 3) - Illinois', N'https://drive.google.com/uc?id=10toDF2qFgNxlLlMyBfTIZ3Wo41xWUI5V')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (47, N'Kiawah Island Golf Resort (Ocean Course) - South Carolina', N'https://drive.google.com/uc?id=1LqiWaDixupvR3JPCpmdcOy_8B2qlAf0u')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (48, N'Riviera Country Club - California', N'https://drive.google.com/uc?id=1_z4qank_TBgrIm8YyjmyioqJ6gOEy61Z')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (49, N'Hazeltine National Golf Club - Minnesota', N'https://drive.google.com/file/d/1_z4qank_TBgrIm8YyjmyioqJ6gOEy61Z/view?usp=drive_link')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (50, N'Muirfield Village Golf Club - Ohio', N'https://drive.google.com/uc?id=1BAGlp-91Ok1vjzGfrQHrCBtFcikUPP9Q')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (51, N'Olympic Club (Lake Course) - California', N'https://drive.google.com/uc?id=1ECFV2X-Zj5IKqBmUL8ojXt6s12sP_U33')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (52, N'Inverness Club - Ohio', N'https://drive.google.com/uc?id=1dgG6H_-qgBWVX0h5CO-2Eg0BQDwybh4q')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (53, N'Liberty National Golf Club - New Jersey', N'https://drive.google.com/uc?id=1KHQNyr3KHAlqM4ZvWCzjK6lIdN31V7sb')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (54, N'Bethesda Country Club - Maryland', N'https://drive.google.com/uc?id=1ARklvShwYXZV6r5g5x9uhvqGWWWUfWa7')
+INSERT [dbo].[courses] ([courseId], [courseName], [imageUri]) VALUES (61, N'testCourse', N'https://drive.google.com/uc?id=1ARklvShwYXZV6r5g5x9uhvqGWWWUfWa7')
+SET IDENTITY_INSERT [dbo].[courses] OFF
+GO
+SET IDENTITY_INSERT [dbo].[holes] ON 
+
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (223, 25, 1, 4, 390)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (224, 25, 2, 5, 560)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (225, 25, 3, 3, 175)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (226, 25, 4, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (227, 25, 5, 4, 385)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (228, 25, 6, 5, 520)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (229, 25, 7, 3, 200)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (230, 25, 8, 4, 370)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (231, 25, 9, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (232, 25, 10, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (233, 25, 11, 3, 185)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (234, 25, 12, 5, 540)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (235, 25, 13, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (236, 25, 14, 4, 390)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (237, 25, 15, 3, 165)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (238, 25, 16, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (239, 25, 17, 5, 575)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (240, 25, 18, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (241, 26, 1, 4, 310)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (242, 26, 2, 3, 190)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (243, 26, 3, 5, 535)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (244, 26, 4, 4, 390)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (245, 26, 5, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (246, 26, 6, 3, 185)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (247, 26, 7, 5, 525)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (248, 26, 8, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (249, 26, 9, 4, 355)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (250, 26, 10, 4, 375)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (251, 26, 11, 3, 210)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (252, 26, 12, 5, 565)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (253, 26, 13, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (254, 26, 14, 3, 155)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (255, 26, 15, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (256, 26, 16, 5, 600)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (257, 26, 17, 3, 175)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (258, 26, 18, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (259, 27, 1, 4, 395)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (260, 27, 2, 5, 555)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (261, 27, 3, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (262, 27, 4, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (263, 27, 5, 4, 405)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (264, 27, 6, 5, 560)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (265, 27, 7, 3, 190)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (266, 27, 8, 4, 375)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (267, 27, 9, 4, 425)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (268, 27, 10, 4, 415)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (269, 27, 11, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (270, 27, 12, 5, 580)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (271, 27, 13, 4, 395)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (272, 27, 14, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (273, 27, 15, 3, 185)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (274, 27, 16, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (275, 27, 17, 5, 590)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (276, 27, 18, 4, 405)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (295, 29, 1, 4, 417)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (296, 29, 2, 5, 567)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (297, 29, 3, 3, 192)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (298, 29, 4, 4, 424)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (299, 29, 5, 4, 432)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (300, 29, 6, 5, 575)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (301, 29, 7, 3, 208)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (302, 29, 8, 4, 408)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (303, 29, 9, 4, 439)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (304, 29, 10, 5, 586)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (305, 29, 11, 4, 421)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (306, 29, 12, 3, 195)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (307, 29, 13, 4, 455)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (308, 29, 14, 5, 595)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (309, 29, 15, 4, 425)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (310, 29, 16, 3, 202)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (311, 29, 17, 4, 437)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (312, 29, 18, 5, 605)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (313, 30, 1, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (314, 30, 2, 5, 580)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (315, 30, 3, 3, 210)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (316, 30, 4, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (317, 30, 5, 4, 390)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (318, 30, 6, 5, 560)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (319, 30, 7, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (320, 30, 8, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (321, 30, 9, 5, 600)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (322, 30, 10, 4, 425)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (323, 30, 11, 3, 185)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (324, 30, 12, 5, 570)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (325, 30, 13, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (326, 30, 14, 3, 195)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (327, 30, 15, 5, 585)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (328, 30, 16, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (329, 30, 17, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (330, 30, 18, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (331, 31, 1, 4, 375)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (332, 31, 2, 5, 540)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (333, 31, 3, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (334, 31, 4, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (335, 31, 5, 4, 390)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (336, 31, 6, 5, 550)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (337, 31, 7, 4, 405)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (338, 31, 8, 3, 165)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (339, 31, 9, 4, 430)
+GO
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (340, 31, 10, 4, 390)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (341, 31, 11, 5, 560)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (342, 31, 12, 4, 425)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (343, 31, 13, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (344, 31, 14, 5, 580)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (345, 31, 15, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (346, 31, 16, 3, 175)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (347, 31, 17, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (348, 31, 18, 5, 590)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (349, 32, 1, 4, 377)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (350, 32, 2, 5, 502)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (351, 32, 3, 4, 390)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (352, 32, 4, 4, 331)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (353, 32, 5, 3, 195)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (354, 32, 6, 5, 523)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (355, 32, 7, 3, 106)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (356, 32, 8, 4, 428)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (357, 32, 9, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (358, 32, 10, 4, 446)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (359, 32, 11, 4, 373)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (360, 32, 12, 3, 202)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (361, 32, 13, 4, 445)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (362, 32, 14, 5, 573)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (363, 32, 15, 4, 397)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (364, 32, 16, 4, 403)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (365, 32, 17, 3, 208)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (366, 32, 18, 5, 543)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (367, 33, 1, 4, 445)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (368, 33, 2, 5, 575)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (369, 33, 3, 4, 350)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (370, 33, 4, 3, 240)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (371, 33, 5, 4, 495)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (372, 33, 6, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (373, 33, 7, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (374, 33, 8, 5, 570)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (375, 33, 9, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (376, 33, 10, 4, 495)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (377, 33, 11, 4, 505)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (378, 33, 12, 3, 155)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (379, 33, 13, 5, 510)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (380, 33, 14, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (381, 33, 15, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (382, 33, 16, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (383, 33, 17, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (384, 33, 18, 4, 465)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (385, 34, 1, 4, 402)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (386, 34, 2, 4, 387)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (387, 34, 3, 4, 337)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (388, 34, 4, 4, 507)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (389, 34, 5, 5, 576)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (390, 34, 6, 3, 207)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (391, 34, 7, 4, 424)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (392, 34, 8, 4, 502)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (393, 34, 9, 3, 191)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (394, 34, 10, 5, 617)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (395, 34, 11, 4, 483)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (396, 34, 12, 4, 456)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (397, 34, 13, 3, 386)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (398, 34, 14, 4, 466)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (399, 34, 15, 4, 206)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (400, 34, 16, 4, 528)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (401, 34, 17, 3, 198)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (402, 34, 18, 4, 451)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (403, 35, 1, 4, 408)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (404, 35, 2, 5, 593)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (405, 35, 3, 3, 181)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (406, 35, 4, 4, 493)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (407, 35, 5, 5, 603)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (408, 35, 6, 4, 355)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (409, 35, 7, 3, 221)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (410, 35, 8, 4, 507)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (411, 35, 9, 4, 442)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (412, 35, 10, 4, 361)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (413, 35, 11, 5, 618)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (414, 35, 12, 3, 163)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (415, 35, 13, 4, 403)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (416, 35, 14, 4, 396)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (417, 35, 15, 4, 518)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (418, 35, 16, 5, 569)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (419, 35, 17, 3, 223)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (420, 35, 18, 4, 493)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (421, 36, 1, 4, 429)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (422, 36, 2, 4, 389)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (423, 36, 3, 3, 232)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (424, 36, 4, 5, 517)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (425, 36, 5, 4, 478)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (426, 36, 6, 4, 408)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (427, 36, 7, 5, 553)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (428, 36, 8, 3, 210)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (429, 36, 9, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (430, 36, 10, 4, 502)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (431, 36, 11, 4, 435)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (432, 36, 12, 4, 517)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (433, 36, 13, 4, 554)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (434, 36, 14, 3, 161)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (435, 36, 15, 4, 459)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (436, 36, 16, 5, 620)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (437, 36, 17, 3, 207)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (438, 36, 18, 4, 411)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (439, 37, 1, 4, 450)
+GO
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (440, 37, 2, 4, 389)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (441, 37, 3, 3, 195)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (442, 37, 4, 4, 488)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (443, 37, 5, 4, 454)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (444, 37, 6, 5, 564)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (445, 37, 7, 4, 462)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (446, 37, 8, 3, 200)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (447, 37, 9, 5, 609)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (448, 37, 10, 4, 417)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (449, 37, 11, 3, 221)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (450, 37, 12, 4, 504)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (451, 37, 13, 5, 542)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (452, 37, 14, 4, 435)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (453, 37, 15, 4, 480)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (454, 37, 16, 3, 227)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (455, 37, 17, 4, 443)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (456, 37, 18, 5, 570)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (457, 38, 1, 4, 482)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (458, 38, 2, 4, 340)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (459, 38, 3, 3, 189)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (460, 38, 4, 5, 609)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (461, 38, 5, 4, 382)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (462, 38, 6, 3, 194)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (463, 38, 7, 4, 479)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (464, 38, 8, 3, 252)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (465, 38, 9, 4, 477)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (466, 38, 10, 4, 462)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (467, 38, 11, 4, 379)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (468, 38, 12, 5, 667)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (469, 38, 13, 3, 183)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (470, 38, 14, 4, 358)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (471, 38, 15, 4, 500)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (472, 38, 16, 4, 442)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (473, 38, 17, 4, 313)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (474, 38, 18, 4, 484)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (475, 39, 1, 4, 399)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (476, 39, 2, 3, 252)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (477, 39, 3, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (478, 39, 4, 4, 471)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (479, 39, 5, 5, 544)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (480, 39, 6, 4, 475)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (481, 39, 7, 3, 189)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (482, 39, 8, 4, 439)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (483, 39, 9, 4, 374)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (484, 39, 10, 4, 415)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (485, 39, 11, 3, 158)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (486, 39, 12, 4, 469)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (487, 39, 13, 4, 373)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (488, 39, 14, 4, 519)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (489, 39, 15, 4, 399)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (490, 39, 16, 3, 205)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (491, 39, 17, 5, 589)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (492, 39, 18, 4, 485)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (493, 40, 1, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (494, 40, 2, 4, 378)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (495, 40, 3, 3, 210)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (496, 40, 4, 5, 500)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (497, 40, 5, 4, 423)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (498, 40, 6, 4, 392)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (499, 40, 7, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (500, 40, 8, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (501, 40, 9, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (502, 40, 10, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (503, 40, 11, 3, 205)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (504, 40, 12, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (505, 40, 13, 4, 375)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (506, 40, 14, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (507, 40, 15, 4, 505)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (508, 40, 16, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (509, 40, 17, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (510, 40, 18, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (511, 41, 1, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (512, 41, 2, 4, 380)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (513, 41, 3, 3, 235)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (514, 41, 4, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (515, 41, 5, 5, 540)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (516, 41, 6, 4, 380)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (517, 41, 7, 3, 165)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (518, 41, 8, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (519, 41, 9, 5, 565)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (520, 41, 10, 3, 190)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (521, 41, 11, 4, 375)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (522, 41, 12, 5, 635)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (523, 41, 13, 4, 425)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (524, 41, 14, 3, 160)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (525, 41, 15, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (526, 41, 16, 5, 515)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (527, 41, 17, 4, 455)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (528, 41, 18, 4, 485)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (529, 42, 1, 4, 350)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (530, 42, 2, 5, 520)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (531, 42, 3, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (532, 42, 4, 4, 350)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (533, 42, 5, 4, 426)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (534, 42, 6, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (535, 42, 7, 4, 360)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (536, 42, 8, 4, 345)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (537, 42, 9, 3, 195)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (538, 42, 10, 4, 290)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (539, 42, 11, 4, 380)
+GO
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (540, 42, 12, 4, 360)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (541, 42, 13, 3, 115)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (542, 42, 14, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (543, 42, 15, 4, 425)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (544, 42, 16, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (545, 42, 17, 3, 210)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (546, 42, 18, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (547, 43, 1, 4, 380)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (548, 43, 2, 5, 502)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (549, 43, 3, 4, 390)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (550, 43, 4, 4, 331)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (551, 43, 5, 3, 188)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (552, 43, 6, 5, 523)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (553, 43, 7, 3, 106)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (554, 43, 8, 4, 428)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (555, 43, 9, 4, 462)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (556, 43, 10, 4, 446)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (557, 43, 11, 4, 373)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (558, 43, 12, 3, 202)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (559, 43, 13, 4, 445)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (560, 43, 14, 5, 580)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (561, 43, 15, 4, 396)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (562, 43, 16, 4, 403)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (563, 43, 17, 3, 208)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (564, 43, 18, 5, 543)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (565, 44, 1, 4, 423)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (566, 44, 2, 5, 532)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (567, 44, 3, 3, 177)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (568, 44, 4, 4, 384)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (569, 44, 5, 4, 471)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (570, 44, 6, 4, 393)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (571, 44, 7, 4, 442)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (572, 44, 8, 3, 237)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (573, 44, 9, 5, 583)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (574, 44, 10, 4, 424)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (575, 44, 11, 5, 558)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (576, 44, 12, 4, 302)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (577, 44, 13, 3, 181)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (578, 44, 14, 4, 481)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (579, 44, 15, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (580, 44, 16, 5, 523)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (581, 44, 17, 3, 137)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (582, 44, 18, 4, 462)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (583, 45, 1, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (584, 45, 2, 5, 520)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (585, 45, 3, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (586, 45, 4, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (587, 45, 5, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (588, 45, 6, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (589, 45, 7, 3, 195)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (590, 45, 8, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (591, 45, 9, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (592, 45, 10, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (593, 45, 11, 5, 540)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (594, 45, 12, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (595, 45, 13, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (596, 45, 14, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (597, 45, 15, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (598, 45, 16, 5, 550)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (599, 45, 17, 3, 200)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (600, 45, 18, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (601, 46, 1, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (602, 46, 2, 3, 175)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (603, 46, 3, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (604, 46, 4, 5, 560)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (605, 46, 5, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (606, 46, 6, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (607, 46, 7, 3, 190)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (608, 46, 8, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (609, 46, 9, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (610, 46, 10, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (611, 46, 11, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (612, 46, 12, 3, 200)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (613, 46, 13, 5, 560)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (614, 46, 14, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (615, 46, 15, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (616, 46, 16, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (617, 46, 17, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (618, 46, 18, 5, 580)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (619, 47, 1, 4, 380)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (620, 47, 2, 5, 520)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (621, 47, 3, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (622, 47, 4, 3, 190)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (623, 47, 5, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (624, 47, 6, 5, 550)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (625, 47, 7, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (626, 47, 8, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (627, 47, 9, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (628, 47, 10, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (629, 47, 11, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (630, 47, 12, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (631, 47, 13, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (632, 47, 14, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (633, 47, 15, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (634, 47, 16, 5, 560)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (635, 47, 17, 3, 190)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (636, 47, 18, 4, 480)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (637, 48, 1, 5, 500)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (638, 48, 2, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (639, 48, 3, 4, 410)
+GO
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (640, 48, 4, 3, 175)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (641, 48, 5, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (642, 48, 6, 3, 200)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (643, 48, 7, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (644, 48, 8, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (645, 48, 9, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (646, 48, 10, 4, 300)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (647, 48, 11, 5, 520)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (648, 48, 12, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (649, 48, 13, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (650, 48, 14, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (651, 48, 15, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (652, 48, 16, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (653, 48, 17, 3, 175)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (654, 48, 18, 5, 550)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (655, 49, 1, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (656, 49, 2, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (657, 49, 3, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (658, 49, 4, 5, 550)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (659, 49, 5, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (660, 49, 6, 5, 540)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (661, 49, 7, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (662, 49, 8, 3, 190)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (663, 49, 9, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (664, 49, 10, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (665, 49, 11, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (666, 49, 12, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (667, 49, 13, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (668, 49, 14, 4, 480)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (669, 49, 15, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (670, 49, 16, 5, 560)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (671, 49, 17, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (672, 49, 18, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (673, 50, 1, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (674, 50, 2, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (675, 50, 3, 4, 360)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (676, 50, 4, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (677, 50, 5, 5, 550)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (678, 50, 6, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (679, 50, 7, 5, 570)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (680, 50, 8, 3, 190)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (681, 50, 9, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (682, 50, 10, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (683, 50, 11, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (684, 50, 12, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (685, 50, 13, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (686, 50, 14, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (687, 50, 15, 5, 520)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (688, 50, 16, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (689, 50, 17, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (690, 50, 18, 4, 480)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (691, 51, 1, 5, 520)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (692, 51, 2, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (693, 51, 3, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (694, 51, 4, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (695, 51, 5, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (696, 51, 6, 5, 540)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (697, 51, 7, 3, 190)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (698, 51, 8, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (699, 51, 9, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (700, 51, 10, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (701, 51, 11, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (702, 51, 12, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (703, 51, 13, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (704, 51, 14, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (705, 51, 15, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (706, 51, 16, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (707, 51, 17, 5, 550)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (708, 51, 18, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (709, 52, 1, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (710, 52, 2, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (711, 52, 3, 3, 175)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (712, 52, 4, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (713, 52, 5, 5, 520)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (714, 52, 6, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (715, 52, 7, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (716, 52, 8, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (717, 52, 9, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (718, 52, 10, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (719, 52, 11, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (720, 52, 12, 5, 540)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (721, 52, 13, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (722, 52, 14, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (723, 52, 15, 5, 550)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (724, 52, 16, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (725, 52, 17, 3, 175)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (726, 52, 18, 4, 480)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (727, 53, 1, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (728, 53, 2, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (729, 53, 3, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (730, 53, 4, 5, 540)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (731, 53, 5, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (732, 53, 6, 5, 550)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (733, 53, 7, 4, 420)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (734, 53, 8, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (735, 53, 9, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (736, 53, 10, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (737, 53, 11, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (738, 53, 12, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (739, 53, 13, 4, 470)
+GO
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (740, 53, 14, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (741, 53, 15, 5, 540)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (742, 53, 16, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (743, 53, 17, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (744, 53, 18, 5, 560)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (745, 54, 1, 4, 400)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (746, 54, 2, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (747, 54, 3, 5, 520)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (748, 54, 4, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (749, 54, 5, 4, 450)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (750, 54, 6, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (751, 54, 7, 3, 170)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (752, 54, 8, 4, 430)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (753, 54, 9, 4, 460)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (754, 54, 10, 5, 530)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (755, 54, 11, 4, 410)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (756, 54, 12, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (757, 54, 13, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (758, 54, 14, 4, 440)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (759, 54, 15, 5, 540)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (760, 54, 16, 3, 180)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (761, 54, 17, 4, 470)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (762, 54, 18, 4, 480)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (781, 61, 1, 3, 100)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (782, 61, 2, 4, 300)
+INSERT [dbo].[holes] ([holeId], [courseId], [holeNumber], [par], [yardage]) VALUES (783, 61, 3, 5, 500)
+SET IDENTITY_INSERT [dbo].[holes] OFF
+GO
+SET IDENTITY_INSERT [dbo].[roundHoles] ON 
+
+INSERT [dbo].[roundHoles] ([roundHoleId], [roundId], [holeId], [stroke], [putts], [penaltyStrokes], [weatherConditions], [bunkerShotsCount], [bunkerRecovery], [scrambleAttempted], [scrambleSuccess], [fairwayHit], [greenInRegulation]) VALUES (10188, 10258, 781, 2, 1, 0, N'Clear', 0, NULL, NULL, 0, NULL, 1)
+INSERT [dbo].[roundHoles] ([roundHoleId], [roundId], [holeId], [stroke], [putts], [penaltyStrokes], [weatherConditions], [bunkerShotsCount], [bunkerRecovery], [scrambleAttempted], [scrambleSuccess], [fairwayHit], [greenInRegulation]) VALUES (10189, 10258, 782, 2, 1, 0, N'Clear', 0, NULL, NULL, 0, NULL, 1)
+INSERT [dbo].[roundHoles] ([roundHoleId], [roundId], [holeId], [stroke], [putts], [penaltyStrokes], [weatherConditions], [bunkerShotsCount], [bunkerRecovery], [scrambleAttempted], [scrambleSuccess], [fairwayHit], [greenInRegulation]) VALUES (10190, 10258, 783, 2, 1, 0, N'Clear', 0, NULL, NULL, 0, NULL, 1)
+SET IDENTITY_INSERT [dbo].[roundHoles] OFF
+GO
+SET IDENTITY_INSERT [dbo].[rounds] ON 
+
+INSERT [dbo].[rounds] ([roundId], [userId], [courseId], [roundDate]) VALUES (10258, 1, 61, CAST(N'2024-12-08T17:28:12.480' AS DateTime))
+SET IDENTITY_INSERT [dbo].[rounds] OFF
+GO
+SET IDENTITY_INSERT [dbo].[shots] ON 
+
+INSERT [dbo].[shots] ([shotId], [roundHoleId], [shotNumber], [distance], [remainingDistance], [clubUsed], [ballDirection], [shotType], [ballHeight], [lie], [shotResult], [notes]) VALUES (10213, 10188, 1, 100, 5, N'GapWedge_GW', N'Green', N'Straight', N'Medium', N'Tee', N'Perfect', N'')
+INSERT [dbo].[shots] ([shotId], [roundHoleId], [shotNumber], [distance], [remainingDistance], [clubUsed], [ballDirection], [shotType], [ballHeight], [lie], [shotResult], [notes]) VALUES (10214, 10188, 2, 5, 0, N'Putter', N'Holed', N'StraightPutt', N'Default', N'Green', N'PuttHoled', N'')
+INSERT [dbo].[shots] ([shotId], [roundHoleId], [shotNumber], [distance], [remainingDistance], [clubUsed], [ballDirection], [shotType], [ballHeight], [lie], [shotResult], [notes]) VALUES (10215, 10189, 1, 300, 0, N'Driver', N'Green', N'Straight', N'Medium', N'Tee', N'Perfect', N'')
+INSERT [dbo].[shots] ([shotId], [roundHoleId], [shotNumber], [distance], [remainingDistance], [clubUsed], [ballDirection], [shotType], [ballHeight], [lie], [shotResult], [notes]) VALUES (10216, 10189, 2, 0, 0, N'Putter', N'Holed', N'StraightPutt', N'Default', N'Green', N'PuttHoled', N'')
+INSERT [dbo].[shots] ([shotId], [roundHoleId], [shotNumber], [distance], [remainingDistance], [clubUsed], [ballDirection], [shotType], [ballHeight], [lie], [shotResult], [notes]) VALUES (10217, 10190, 1, 500, 0, N'Driver', N'Green', N'Straight', N'High', N'Tee', N'Perfect', N'')
+INSERT [dbo].[shots] ([shotId], [roundHoleId], [shotNumber], [distance], [remainingDistance], [clubUsed], [ballDirection], [shotType], [ballHeight], [lie], [shotResult], [notes]) VALUES (10218, 10190, 2, 0, 0, N'Putter', N'Holed', N'StraightPutt', N'Default', N'Green', N'PuttHoled', N'')
+SET IDENTITY_INSERT [dbo].[shots] OFF
 GO
 SET IDENTITY_INSERT [dbo].[users] ON 
 
-INSERT [dbo].[users] ([userId], [name], [username], [email], [yearsOfExperience], [averageScore], [practiceFrequency], [scoreGoal], [puttingGoal], [approachGoal]) VALUES (2, N'Ryo Kobayashi', N'rk1', N'dfasdfga', 12, 85, 2, 77, 1.5, N'a')
-INSERT [dbo].[users] ([userId], [name], [username], [email], [yearsOfExperience], [averageScore], [practiceFrequency], [scoreGoal], [puttingGoal], [approachGoal]) VALUES (27, N'rk', N'rk2', N'rkoba1@gmail.com', 12, 110, 2, 70, 1.1, N'a')
-INSERT [dbo].[users] ([userId], [name], [username], [email], [yearsOfExperience], [averageScore], [practiceFrequency], [scoreGoal], [puttingGoal], [approachGoal]) VALUES (31, N'q', N'q', N'q@gmail.com', 12, 100, 3, 70, 1.7000000000000002, N'a')
-INSERT [dbo].[users] ([userId], [name], [username], [email], [yearsOfExperience], [averageScore], [practiceFrequency], [scoreGoal], [puttingGoal], [approachGoal]) VALUES (32, N'qa', N'qa', N'qa@gmail.com', 12, 100, 3, 70, 1.7000000000000002, N'a')
+INSERT [dbo].[users] ([userId], [name], [username], [email], [yearsOfExperience], [averageScore], [practiceFrequency], [scoreGoal], [puttingGoal], [approachGoal], [shotGoal], [passwordHash], [createdAt]) VALUES (1, N'John Doe', N'johndoe', N'johndoe@example.com', 5, 85, 3, 95, 1.7, N'Improve approach', N'Reduce shot error', N'hashedpassword123', CAST(N'2024-11-25T18:08:40.160' AS DateTime))
+INSERT [dbo].[users] ([userId], [name], [username], [email], [yearsOfExperience], [averageScore], [practiceFrequency], [scoreGoal], [puttingGoal], [approachGoal], [shotGoal], [passwordHash], [createdAt]) VALUES (2, N'Jane Smith', N'janesmith', N'janesmith@example.com', 8, 92, 4, 95, 1.8, N'Better short game', N'Consistent shot accuracy', N'hashedpassword456', CAST(N'2024-11-06T17:32:12.763' AS DateTime))
+INSERT [dbo].[users] ([userId], [name], [username], [email], [yearsOfExperience], [averageScore], [practiceFrequency], [scoreGoal], [puttingGoal], [approachGoal], [shotGoal], [passwordHash], [createdAt]) VALUES (3, N'Mike Brown', N'mikeb', N'mikeb@example.com', 3, 78, 2, 85, 3, N'More greens in regulation', N'Fewer putts per round', N'hashedpassword789', CAST(N'2024-11-06T17:32:12.763' AS DateTime))
+INSERT [dbo].[users] ([userId], [name], [username], [email], [yearsOfExperience], [averageScore], [practiceFrequency], [scoreGoal], [puttingGoal], [approachGoal], [shotGoal], [passwordHash], [createdAt]) VALUES (4, N'Shawn', N'shawny', N'shawn@shawn.shawn', 900, 800, 4, 69, 1.7, N'Approach shots under 50 yards', N'Hit a draw ball', N'pass', CAST(N'2024-11-22T13:07:03.713' AS DateTime))
 SET IDENTITY_INSERT [dbo].[users] OFF
+GO
+/****** Object:  Index [IX_roundHoles_holeId]    Script Date: 12/8/2024 6:40:15 PM ******/
+CREATE NONCLUSTERED INDEX [IX_roundHoles_holeId] ON [dbo].[roundHoles]
+(
+	[holeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_roundHoles_roundId]    Script Date: 12/8/2024 6:40:15 PM ******/
+CREATE NONCLUSTERED INDEX [IX_roundHoles_roundId] ON [dbo].[roundHoles]
+(
+	[roundId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_shots_roundHoleId]    Script Date: 12/8/2024 6:40:15 PM ******/
+CREATE NONCLUSTERED INDEX [IX_shots_roundHoleId] ON [dbo].[shots]
+(
+	[roundHoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[users] ADD  DEFAULT (getdate()) FOR [createdAt]
+GO
+ALTER TABLE [dbo].[holes]  WITH CHECK ADD  CONSTRAINT [FK_holes_courses] FOREIGN KEY([courseId])
+REFERENCES [dbo].[courses] ([courseId])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[holes] CHECK CONSTRAINT [FK_holes_courses]
+GO
+ALTER TABLE [dbo].[roundHoles]  WITH CHECK ADD  CONSTRAINT [FK_RoundHole_holes] FOREIGN KEY([holeId])
+REFERENCES [dbo].[holes] ([holeId])
+GO
+ALTER TABLE [dbo].[roundHoles] CHECK CONSTRAINT [FK_RoundHole_holes]
+GO
+ALTER TABLE [dbo].[roundHoles]  WITH CHECK ADD  CONSTRAINT [FK_RoundHole_rounds] FOREIGN KEY([roundId])
+REFERENCES [dbo].[rounds] ([roundId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[roundHoles] CHECK CONSTRAINT [FK_RoundHole_rounds]
+GO
+ALTER TABLE [dbo].[rounds]  WITH CHECK ADD  CONSTRAINT [FK_rounds_courses] FOREIGN KEY([courseId])
+REFERENCES [dbo].[courses] ([courseId])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[rounds] CHECK CONSTRAINT [FK_rounds_courses]
+GO
+ALTER TABLE [dbo].[rounds]  WITH CHECK ADD  CONSTRAINT [FK_rounds_users] FOREIGN KEY([userId])
+REFERENCES [dbo].[users] ([userId])
+GO
+ALTER TABLE [dbo].[rounds] CHECK CONSTRAINT [FK_rounds_users]
+GO
+ALTER TABLE [dbo].[shots]  WITH CHECK ADD  CONSTRAINT [FK_Shot_roundHole] FOREIGN KEY([roundHoleId])
+REFERENCES [dbo].[roundHoles] ([roundHoleId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[shots] CHECK CONSTRAINT [FK_Shot_roundHole]
 GO
 USE [master]
 GO
-ALTER DATABASE [Test_databese] SET  READ_WRITE 
+ALTER DATABASE [test_db] SET  READ_WRITE 
 GO
