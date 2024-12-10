@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using GolfAppBackend.Models.Enums;
 
 namespace GolfAppBackend.Models
 {
@@ -35,26 +34,26 @@ namespace GolfAppBackend.Models
 
         // 使用したクラブ
         [Required]
-        public ClubUsed clubUsed { get; set; }
+        public String clubUsed { get; set; }
 
         // ボールがどこに行ったか
         [Required]
-        public BallDirection ballDirection { get; set; }
+        public String ballDirection { get; set; }
 
         // ショットの種類
         [Required]
-        public ShotType shotType { get; set; }
+        public String shotType { get; set; }
 
         // ボールの弾道の高さ
         [Required]
-        public BallHeight ballHeight { get; set; }
+        public String ballHeight { get; set; }
 
         // ライの状態
         [Required]
-        public Lie lie { get; set; }
+        public String lie { get; set; }
 
         // ショットの結果
-        public ShotResult? shotResult { get; set; }
+        public String? shotResult { get; set; }
 
         // ショットに関するメモ（自由記述）
         public string notes { get; set; }

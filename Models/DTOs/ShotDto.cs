@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using GolfAppBackend.Models.Enums;
 
 namespace GolfAppBackend.Models.DTOs
 {
@@ -22,79 +21,29 @@ namespace GolfAppBackend.Models.DTOs
         public int remainingDistance { get; set; } // Remaining distance after the shot
 
         [Required]
-        public ClubUsed clubUsed { get; set; } // Enum representing the club used for the shot
+        public string clubUsed { get; set; } // Enum representing the club used for the shot
 
         [Required]
-        public BallDirection ballDirection { get; set; } // Enum representing the direction of the ball
-
-        [JsonIgnore]
-        public object shotType { get; set; } // Dynamically either ShotType or PuttType (ignored during serialization)
+        public string ballDirection { get; set; } // Enum representing the direction of the ball
 
         [Required]
         public string shotTypeName { get; set; } // Indicates the specific type of the shot (e.g., "ShotType" or "PuttType")
 
         [Required]
-        public BallHeight ballHeight { get; set; } // Enum representing the height of the ball trajectory
+        public string shotType { get; set; } // Enum name representing either ShotType or PuttType
 
         [Required]
-        public Lie lie { get; set; } // Enum representing the lie (where the ball lies)
+        public string ballHeight { get; set; } // Enum representing the height of the ball trajectory
 
-        [JsonIgnore]
-        public object shotResult { get; set; } // Dynamically either ShotResult or PuttResult (ignored during serialization)
+        [Required]
+        public string lie { get; set; } // Enum representing the lie (where the ball lies)
 
         [Required]
         public string shotResultName { get; set; } // Indicates the specific result of the shot (e.g., "ShotResult" or "PuttResult")
 
+        [Required]
+        public string shotResult { get; set; } // Enum name representing either ShotResult or PuttResult
+
         public string notes { get; set; } // Additional notes on the shot
-
-        // Custom methods for JSON handling of dynamic enums (for shotType and shotResult)
-
-        [JsonPropertyName("shotType")]
-        public string ShotTypeAsString
-        {
-            get
-            {
-                return shotType != null ? shotType.ToString() : string.Empty;
-            }
-            set
-            {
-                // Logic to convert string back to proper Enum type based on shotTypeName
-                if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(shotTypeName))
-                {
-                    if (shotTypeName == "ShotType")
-                    {
-                        shotType = Enum.TryParse(typeof(ShotType), value, true, out var parsed) ? parsed : null;
-                    }
-                    else if (shotTypeName == "PuttType")
-                    {
-                        shotType = Enum.TryParse(typeof(PuttType), value, true, out var parsed) ? parsed : null;
-                    }
-                }
-            }
-        }
-
-        [JsonPropertyName("shotResult")]
-        public string ShotResultAsString
-        {
-            get
-            {
-                return shotResult != null ? shotResult.ToString() : string.Empty;
-            }
-            set
-            {
-                // Logic to convert string back to proper Enum type based on shotResultName
-                if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(shotResultName))
-                {
-                    if (shotResultName == "ShotResult")
-                    {
-                        shotResult = Enum.TryParse(typeof(ShotResult), value, true, out var parsed) ? parsed : null;
-                    }
-                    else if (shotResultName == "PuttResult")
-                    {
-                        shotResult = Enum.TryParse(typeof(PuttResult), value, true, out var parsed) ? parsed : null;
-                    }
-                }
-            }
-        }
     }
 }

@@ -82,6 +82,25 @@ namespace GolfAppBackend.Controllers
             return roundHole;
         }
 
+        // GET: api/users/{userId}/rounds/holes
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<RoundHole>>> GetAllRoundHolesForUser(long userId)
+        {
+            // ユーザーが所有するラウンドに関連するすべてのRoundHoleを取得
+            var roundHoles = await _context.RoundHoles
+                .Where(rh => rh.Round.userId == userId)
+                .ToListAsync();
+
+            if (roundHoles == null || !roundHoles.Any())
+            {
+                return NotFound("No RoundHoles found for the specified user.");
+            }
+
+            return Ok(roundHoles);
+        }
+
+
+
         // PUT: api/users/{userId}/rounds/{roundId}/holes/{holeId}
         [HttpPut("{holeId}")]
         public async Task<IActionResult> UpdateRoundHole(long userId, long roundId, long holeId, [FromBody] RoundHoleDto roundHoleDto)
